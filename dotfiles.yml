@@ -1,0 +1,13 @@
+---
+
+- hosts: monitoring
+  user: pi
+
+  tasks:
+   - name: Clone dotfiles repository
+     git: repo=https://github.com/nablaa/dotfiles.git
+          dest=dotfiles
+          update=yes
+
+   - name: Install dotfiles
+     shell: dotfiles/install.sh
