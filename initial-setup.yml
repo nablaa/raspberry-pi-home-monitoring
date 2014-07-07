@@ -21,3 +21,6 @@
      with_file:
        - public_keys/lambda
        - public_keys/mu
+
+   - name: Set hostname
+     lineinfile: dest=/etc/hostname regexp=.* line={{ machinename }}
