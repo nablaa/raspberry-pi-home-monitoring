@@ -50,6 +50,10 @@
      modprobe: name=w1_gpio state=present
      modprobe: name=w1_therm state=present
 
+   - pacman: name=vim state=installed
+   - pacman: name=git state=installed
+   - pacman: name=tmux state=installed
+
   handlers:
    - name: restart sshd
      service:
