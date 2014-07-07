@@ -34,6 +34,12 @@
      notify:
        - restart sshd
 
+   - name: Install NTP
+     pacman: name=ntp state=installed
+
+   - name: Enable NTP daemon
+     service: name=ntpd enabled=yes state=restarted
+
   handlers:
    - name: restart sshd
      service:
