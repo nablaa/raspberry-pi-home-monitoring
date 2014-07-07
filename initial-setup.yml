@@ -34,6 +34,9 @@
      notify:
        - restart sshd
 
+   - name: Set timezone
+     file: src=/usr/share/zoneinfo/Europe/Helsinki dest=/etc/localtime owner=root group=root state=link
+
    - name: Install NTP
      pacman: name=ntp state=installed
 
