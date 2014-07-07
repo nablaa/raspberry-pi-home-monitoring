@@ -54,6 +54,13 @@
    - pacman: name=git state=installed
    - pacman: name=tmux state=installed
    - pacman: name=zsh state=installed
+   - pacman: name=base-devel state=installed
+
+   - name: Copy tmux service config
+     copy: src=tmux-service dest=/etc/systemd/system/tmux@pi.service owner=root group=root mode=0644
+
+   - name: Enable tmux service
+     file: src=/etc/systemd/system/tmux@pi.service dest=/etc/systemd/system/multi-user.target.wants/tmux@pi.service owner=root group=root state=link
 
   handlers:
    - name: restart sshd
