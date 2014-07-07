@@ -3,3 +3,21 @@
 - hosts: monitoring
   user: root
   sudo: no
+  vars:
+    # created with:
+    # python -c 'import crypt; print crypt.crypt("This is my Password", "salt")'
+    password: kzsNjZylpLRrg
+
+  tasks:
+   - name: Create user pi
+     user: name=pi password={{password}}
+
+   - name: Set up authorized_keys for root user
+     authorized_key: user=root key="{{ lookup('file', 'public_keys/lambda') }}"
+
+   - name: Set up authorized_keys for pi user
+     authorized_key: user=pi
+                     key="{{ item }}"
+     with_file:
+       - public_keys/lambda
+       - public_keys/mu
