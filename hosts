@@ -1,0 +1,5 @@
+[monitoring]
+192.168.1.15
+
+[monitoring:vars]
+ansible_python_interpreter=/usr/bin/python2

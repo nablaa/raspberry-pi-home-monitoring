@@ -1,0 +1,5 @@
+---
+
+- hosts: monitoring
+  user: root
+  sudo: no
