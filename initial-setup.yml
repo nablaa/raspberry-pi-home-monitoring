@@ -53,6 +53,7 @@
    - pacman: name=vim state=installed
    - pacman: name=git state=installed
    - pacman: name=tmux state=installed
+   - pacman: name=zsh state=installed
 
   handlers:
    - name: restart sshd
