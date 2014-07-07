@@ -41,7 +41,7 @@
      pacman: name=ntp state=installed
 
    - name: Enable NTP daemon
-     service: name=ntpd enabled=yes state=restarted
+     service: name=ntpd enabled=yes state=started
 
    - name: Enable w1 kernel modules
      copy: src=w1-therm.conf dest=/etc/modules-load.d/w1-therm.conf owner=root group=root mode=0644
