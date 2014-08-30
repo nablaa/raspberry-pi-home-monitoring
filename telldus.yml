@@ -1,0 +1,20 @@
+---
+
+- hosts: monitoring
+  user: root
+
+  tasks:
+   - name: Copy install script
+     copy: src=install-telldus.sh dest=/root/install-telldus.sh owner=root group=root mode=0755
+     notify:
+       - run install script
+
+   - name: Copy telldus config file
+     copy: src=tellstick.conf dest=/etc/tellstick.conf owner=root group=root mode=0644
+
+   - name: Enable telldus daemon
+     service: name=telldus enabled=yes state=started
+
+  handlers:
+   - name: run install script
+     shell: ./install-telldus.sh > install-telldus.log
