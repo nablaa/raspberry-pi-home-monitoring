@@ -44,7 +44,7 @@
      service: name=ntpd enabled=yes state=started
 
    - name: Enable w1 kernel modules
-     copy: src=w1-therm.conf dest=/etc/modules-load.d/w1-therm.conf owner=root group=root mode=0644
+     copy: src=data/w1-therm.conf dest=/etc/modules-load.d/w1-therm.conf owner=root group=root mode=0644
 
    - name: Load w1 kernel modules
      modprobe: name=w1_gpio state=present
@@ -57,7 +57,7 @@
    - pacman: name=base-devel state=installed
 
    - name: Copy tmux service config
-     copy: src=tmux-service dest=/etc/systemd/system/tmux@pi.service owner=root group=root mode=0644
+     copy: src=data/tmux-service dest=/etc/systemd/system/tmux@pi.service owner=root group=root mode=0644
 
    - name: Enable tmux service
      file: src=/etc/systemd/system/tmux@pi.service dest=/etc/systemd/system/multi-user.target.wants/tmux@pi.service owner=root group=root state=link
