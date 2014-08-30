@@ -9,12 +9,15 @@
      notify:
        - run install script
 
-   - name: Copy telldus config file
-     copy: src=data/tellstick.conf dest=/etc/tellstick.conf owner=root group=root mode=0644
+  handlers:
+   - name: run install script
+     shell: ./install-telldus.sh > install-telldus.log
+     notify:
+       - Enable telldus daemon
+       - Copy telldus config file
 
    - name: Enable telldus daemon
      service: name=telldus enabled=yes state=started
 
-  handlers:
-   - name: run install script
-     shell: ./install-telldus.sh > install-telldus.log
+   - name: Copy telldus config file
+     copy: src=data/tellstick.conf dest=/etc/tellstick.conf owner=root group=root mode=0644
