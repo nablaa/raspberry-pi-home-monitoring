@@ -12,6 +12,9 @@
    - name: Create user pi
      user: name=pi password={{password}}
 
+   - name: Set password for root
+     user: name=root password={{password}} update_password=always
+
    - name: Set up authorized_keys for root user
      authorized_key: user=root key="{{ lookup('file', 'public_keys/lambda') }}"
 
