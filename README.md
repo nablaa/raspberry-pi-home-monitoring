@@ -2,63 +2,7 @@
 
 ## Installing image
 
-* These instructions are from
-[Arch Linux ARM Raspberry Pi installation](http://archlinuxarm.org/platforms/armv6/raspberry-pi)
-* Insert SD card (`/dev/sdX`) to host machine and execute following instructions as root
-* Install partitions
-```
-echo "o
-p
-n
-p
-1
-
-+100M
-p
-t
-c
-n
-p
-2
-
-
-p
-w
-w
-" | fdisk /dev/sdX
-```
-
-* Create and mount the FAT filesystem
-```
-mkfs.vfat /dev/sdX1
-mkdir boot
-mount /dev/sdX1 boot
-```
-
-* Create and mount the ext4 filesystem
-```
-mkfs.ext4 /dev/sdX2
-mkdir root
-mount /dev/sdX2 root
-```
-
-* Download and extract the root filesystem
-```
-wget http://archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz
-tar -xf ArchLinuxARM-rpi-latest.tar.gz -C root
-sync
-```
-
-* Move boot files to the first partition
-```
-mv root/boot/* boot
-```
-
-* Unmount partitions
-```
-sync
-umount boot root
-```
+* Run `install-image.sh`
 
 ## Starting Raspberry Pi
 
