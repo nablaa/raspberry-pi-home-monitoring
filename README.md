@@ -6,13 +6,14 @@
 
 ## Starting Raspberry Pi
 
-* Plug in SD card to Raspberry pi
+* Plug in SD card to Raspberry Pi and connect ethernet cable
 * Start Raspberry Pi
-* SSH to Pi and install Python 2
+* SSH to Pi and install necessary packages
 ```
 pacman -Syu
-pacman -S python2
+pacman -S python2 iw wpa_supplicant
 ```
+* Unplug ethernet cable and reboot
 
 # Running Ansible
 
