@@ -1,0 +1,14 @@
+[Unit]
+Description=Start ds18x20-rest server
+
+[Service]
+User=nobody
+Group=nobody
+Restart=always
+StandardOutput=syslog
+SyslogIdentifier=ds18x20-rest
+ExecStart=/usr/bin/ds18x20-rest /etc/ds18x20-rest-config.json
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

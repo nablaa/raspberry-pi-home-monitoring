@@ -1,0 +1,29 @@
+---
+
+- hosts: monitoring
+  user: root
+
+  tasks:
+   - name: Set Python2 as the default Python version
+     file: src=/usr/bin/python2 dest=/usr/bin/python owner=root group=root state=link
+
+   - pacman: name=nodejs state=installed
+
+   - name: Install "ds18x20-rest" node.js package globally
+     npm: name=ds18x20-rest global=yes
+
+   - name: Copy ds18x20-rest service config
+     copy: src=data/ds18x20-rest-service dest=/etc/systemd/system/ds18x20-rest.service owner=root group=root mode=0644
+
+   - name: Copy ds18x20-rest config file
+     copy: src=data/ds18x20-rest-configs/{{ machinename }}.json dest=/etc/ds18x20-rest-config.json owner=root group=root mode=0644
+     notify:
+       - setup ds18x20-rest server service
+
+  handlers:
+   - name: setup ds18x20-rest server service
+     file: src=/etc/systemd/system/ds18x20-rest.service dest=/etc/systemd/system/multi-user.target.wants/ds18x20-rest.service owner=root group=root state=link
+     notify: start ds18x20 service
+
+   - name: start ds18x20 service
+     service: name=ds18x20-rest state=started
