@@ -3,8 +3,24 @@
 set -e
 set -u
 
+usage() {
+    echo "Usage: $0 DEVICE HOSTNAME"
+    echo "Example: $0 /dev/sdX mypi"
+    exit 1
+}
+
+[ $# -ne 2 ] && { usage; }
+
 DEVICE="$1"
-ls "$DEVICE"
+HOSTNAME="$2"
+
+if [ ! -e "$DEVICE" ]; then
+    echo "Device $DEVICE not found!"
+    echo "Give a valid device (e.g. /dev/sdX)"
+    exit 2
+fi
+
+echo "Flashing device $DEVICE and setting hostname to $HOSTNAME"
 
 TMP_DIR=$(mktemp -d)
 echo "Temp directory: $TMP_DIR"
@@ -78,6 +94,9 @@ EOF
 
 echo "Copying boot files to boot partition"
 mv root/boot/* boot
+
+echo "Setting hostname to $HOSTNAME"
+echo "$HOSTNAME" > root/etc/hostname
 
 echo "Unmounting partitions"
 sync
