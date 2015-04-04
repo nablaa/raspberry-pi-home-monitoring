@@ -60,6 +60,7 @@
    - pacman: name=base-devel state=installed
    - pacman: name=wget state=installed
    - pacman: name=rxvt-unicode-terminfo state=installed
+   - pacman: name=iotop state=installed
 
    - name: Copy tmux service config
      copy: src=data/tmux-service dest=/etc/systemd/system/tmux@pi.service owner=root group=root mode=0644
