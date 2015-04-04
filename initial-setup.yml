@@ -67,6 +67,13 @@
    - name: Enable tmux service
      file: src=/etc/systemd/system/tmux@pi.service dest=/etc/systemd/system/multi-user.target.wants/tmux@pi.service owner=root group=root state=link
 
+   - name: Set system log max size
+     lineinfile:
+       dest=/etc/systemd/journald.conf
+       regexp="^SystemMaxUse"
+       line="SystemMaxUse=50M"
+       state=present
+
   handlers:
    - name: restart sshd
      service:
