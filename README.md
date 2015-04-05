@@ -10,10 +10,11 @@
 * Start Raspberry Pi
 * SSH to Pi and install necessary packages
 ```
-pacman -Syu
-pacman -S python2 iw wpa_supplicant wpa_actiond
+pacman -Syu --noconfirm
+pacman -S --noconfirm python2 iw wpa_supplicant wpa_actiond
 ```
 * Unplug ethernet cable and reboot
+* Raspberry Pi should now connect to WLAN network
 
 # Running Ansible
 
