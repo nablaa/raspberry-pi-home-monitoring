@@ -70,7 +70,7 @@ tar -xf ArchLinuxARM-rpi-latest.tar.gz -C root
 sync
 
 echo "Copying netctl profiles"
-cat > root/etc/netctl/wlan0-gamma << EOF
+cat > root/etc/netctl/wlan0-myap << EOF
 Description='WLAN profile for myap'
 Interface=wlan0
 Connection=wireless
@@ -82,9 +82,19 @@ ForceConnect=yes
 TimeoutDHCP=40
 EOF
 
-echo "Adding netctl profile to systemd"
+echo "Creating systemd service for netctl profile"
+cat > 'root/etc/systemd/system/netctl@wlan0\x2dmyap.service' << EOF
+.include /usr/lib/systemd/system/netctl@.service
+
+[Unit]
+Description=WLAN profile for myap
+BindsTo=sys-subsystem-net-devices-wlan0.device
+After=sys-subsystem-net-devices-wlan0.device
+EOF
+
+echo "Enabling WLAN netctl profile at startup"
 pushd root/etc/systemd/system/multi-user.target.wants
-ln -s ../../../../usr/lib/systemd/system/netctl-auto@.service netctl-auto@wlan0.service
+ln -s '../netctl@wlan0\x2dmyap.service' 'netctl@wlan0\x2dmyap.service'
 popd
 
 echo "Disabling powersave on WLAN in udev"
