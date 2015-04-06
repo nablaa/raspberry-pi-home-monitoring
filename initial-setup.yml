@@ -53,14 +53,17 @@
      modprobe: name=w1_gpio state=present
      modprobe: name=w1_therm state=present
 
-   - pacman: name=vim state=installed
-   - pacman: name=git state=installed
-   - pacman: name=tmux state=installed
-   - pacman: name=zsh state=installed
-   - pacman: name=base-devel state=installed
-   - pacman: name=wget state=installed
-   - pacman: name=rxvt-unicode-terminfo state=installed
-   - pacman: name=iotop state=installed
+   - pacman: name={{ item }} state=installed
+     with_items:
+       - vim
+       - git
+       - tmux
+       - zsh
+       - base-devel
+       - wget
+       - rxvt-unicode-terminfo
+       - iotop
+       - htop
 
    - name: Copy tmux service config
      copy: src=data/tmux-service dest=/etc/systemd/system/tmux@pi.service owner=root group=root mode=0644
