@@ -3,14 +3,27 @@
 set -e
 set -u
 
-DIR="$(readlink -f "$(dirname "$0")")"
-TEMP_DIR="install-temp"
+TEMP_DIR="$(mktemp -d)"
 SRC="https://aur.archlinux.org/packages/te/telldus-core/telldus-core.tar.gz"
 
-cd "$DIR"
-rm -rf "$TEMP_DIR"
-mkdir "$TEMP_DIR"
+cleanup() {
+    rm -rf "$TEMP_DIR"
+}
+
+echo "Installing dependencies"
+pacman -S --noconfirm --asdeps libftdi-compat confuse gcc make cmake
+
+echo "Temp directory: $TEMP_DIR"
+trap cleanup EXIT
+
+cd "$TEMP_DIR"
 wget "$SRC"
 tar xvzf telldus-core.tar.gz
 cd telldus-core
-makepkg --syncdeps --noconfirm --install --asroot
+chown -R pi:pi "$TEMP_DIR"
+
+echo "Making Telldus package"
+sudo -u pi makepkg --noconfirm
+
+echo "Installing Telldus package"
+pacman -U --noconfirm "$TEMP_DIR/telldus-core/telldus-core-2.1.2-1-armv6h.pkg.tar.xz"
