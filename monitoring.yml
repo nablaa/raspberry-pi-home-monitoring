@@ -12,6 +12,8 @@
 
    - pacman: name=nodejs state=installed
 
+   - pacman: name=npm state=installed
+
    - name: Install "ds18x20-rest" node.js package globally
      npm: name=ds18x20-rest global=yes
 
