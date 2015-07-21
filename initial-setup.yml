@@ -64,6 +64,7 @@
        - rxvt-unicode-terminfo
        - iotop
        - htop
+       - rsync
 
    - name: Copy tmux service config
      copy: src=data/tmux-service dest=/etc/systemd/system/tmux@pi.service owner=root group=root mode=0644
