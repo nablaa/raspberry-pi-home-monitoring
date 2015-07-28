@@ -7,9 +7,6 @@
    - name: Enable W1 GPIO in Raspberry Pi config
      lineinfile: dest=/boot/config.txt state=present line="dtoverlay=w1-gpio,gpiopin=4,pullup=on"
 
-   - name: Set Python2 as the default Python version
-     file: src=/usr/bin/python2 dest=/usr/bin/python owner=root group=root state=link
-
    - pacman: name=nodejs state=installed
 
    - pacman: name=npm state=installed
