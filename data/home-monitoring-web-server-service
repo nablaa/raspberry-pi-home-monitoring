@@ -1,0 +1,14 @@
+[Unit]
+Description=Start home monitoring web server service
+
+[Service]
+User=pi
+Group=pi
+Restart=always
+StandardOutput=syslog
+SyslogIdentifier=home-monitoring-web-server
+WorkingDirectory=/home/pi/monitoring
+ExecStart=/usr/bin/python3 /home/pi/monitoring/server.py
+
+[Install]
+WantedBy=multi-user.target

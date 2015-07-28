@@ -35,3 +35,4 @@ To install the system using Ansible, run the following commands:
     ansible-playbook -i hosts dotfiles.yml
     ansible-playbook -i hosts telldus.yml
     ansible-playbook -i hosts monitoring.yml
+    ansible-playbook -i hosts home-monitoring-server.yml
