@@ -1,7 +1,7 @@
 {
   "sensors": {
     "bedroom": "28-000004d5037e",
-    "outside": "28-000004d48d1d"
+    "balcony": "28-000004d514ad"
   },
   "port": "8080"
 }
