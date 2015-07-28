@@ -9,6 +9,13 @@
     password: kzsNjZylpLRrg
 
   tasks:
+   - name: GPU memory on Raspberry Pi
+     lineinfile:
+       dest=/boot/config.txt
+       regexp="gpu_mem="
+       line="gpu_mem=16"
+       state=present
+
    - name: Create user pi
      user: name=pi password={{password}}
 
