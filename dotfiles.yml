@@ -11,3 +11,5 @@
 
    - name: Install dotfiles
      shell: dotfiles/install.sh
+
+# vim:ft=ansible:

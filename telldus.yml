@@ -21,3 +21,5 @@
 
    - name: Copy telldus config file
      copy: src=data/tellstick.conf dest=/etc/tellstick.conf owner=root group=root mode=0644
+
+# vim:ft=ansible:

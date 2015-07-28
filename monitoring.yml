@@ -32,3 +32,5 @@
 
    - name: start ds18x20 service
      service: name=ds18x20-rest state=started
+
+# vim:ft=ansible:
