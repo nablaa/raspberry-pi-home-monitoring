@@ -62,7 +62,7 @@
      notify: start home-monitoring-web-server service
 
    - name: setup home-monitoring-create-graphs timer
-     file: src=/etc/systemd/system/home-monitoring-create-graphs.service dest=/etc/systemd/system/multi-user.target.wants/home-monitoring-create-graphs.service owner=root group=root state=link
+     file: src=/etc/systemd/system/home-monitoring-create-graphs.timer dest=/etc/systemd/system/timers.target.wants/home-monitoring-create-graphs.timer owner=root group=root state=link
      notify: start home-monitoring-create-graphs timer
 
    - name: start home-monitoring-data-collection service

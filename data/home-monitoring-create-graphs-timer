@@ -1,5 +1,5 @@
 [Unit]
-Description=Perform system backup
+Description=Run home monitoring graph creation
 
 [Timer]
 OnBootSec=5min
