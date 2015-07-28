@@ -44,6 +44,14 @@
      notify:
        - setup home-monitoring-web-server service
 
+   - name: Copy home-monitoring-create-graphs service config
+     copy: src=data/home-monitoring-create-graphs-service dest=/etc/systemd/system/home-monitoring-create-graphs.service owner=root group=root mode=0644
+
+   - name: Copy home-monitoring-create-graphs timer config
+     copy: src=data/home-monitoring-create-graphs-timer dest=/etc/systemd/system/home-monitoring-create-graphs.timer owner=root group=root mode=0644
+     notify:
+       - setup home-monitoring-create-graphs timer
+
   handlers:
    - name: setup home-monitoring-data-collection service
      file: src=/etc/systemd/system/home-monitoring-data-collection.service dest=/etc/systemd/system/multi-user.target.wants/home-monitoring-data-collection.service owner=root group=root state=link
@@ -53,11 +61,17 @@
      file: src=/etc/systemd/system/home-monitoring-web-server.service dest=/etc/systemd/system/multi-user.target.wants/home-monitoring-web-server.service owner=root group=root state=link
      notify: start home-monitoring-web-server service
 
+   - name: setup home-monitoring-create-graphs timer
+     file: src=/etc/systemd/system/home-monitoring-create-graphs.service dest=/etc/systemd/system/multi-user.target.wants/home-monitoring-create-graphs.service owner=root group=root state=link
+     notify: start home-monitoring-create-graphs timer
+
    - name: start home-monitoring-data-collection service
      service: name=home-monitoring-data-collection state=started
 
    - name: start home-monitoring-web-server service
      service: name=home-monitoring-web-server state=started
 
+   - name: start home-monitoring-create-graphs timer
+     service: name=home-monitoring-create-graphs.timer state=started
 
 # vim:ft=ansible:
