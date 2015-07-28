@@ -5,6 +5,7 @@ Description=Start ds18x20-rest server
 User=nobody
 Group=nobody
 Restart=always
+RestartSec=30
 StandardOutput=syslog
 SyslogIdentifier=ds18x20-rest
 ExecStart=/usr/bin/ds18x20-rest /etc/ds18x20-rest-config.json

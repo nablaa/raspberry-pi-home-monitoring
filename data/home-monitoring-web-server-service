@@ -5,6 +5,7 @@ Description=Start home monitoring web server service
 User=pi
 Group=pi
 Restart=always
+RestartSec=30
 StandardOutput=syslog
 SyslogIdentifier=home-monitoring-web-server
 WorkingDirectory=/home/pi/monitoring

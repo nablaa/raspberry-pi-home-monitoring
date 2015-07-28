@@ -5,6 +5,7 @@ Description=Start home monitoring data collection service
 User=pi
 Group=pi
 Restart=always
+RestartSec=30
 StandardOutput=syslog
 SyslogIdentifier=home-monitoring-data-collection
 WorkingDirectory=/home/pi/monitoring
