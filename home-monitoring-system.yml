@@ -7,6 +7,7 @@
     # created with:
     # python -c 'import crypt; print crypt.crypt("This is my Password", "salt")'
     password: kzsNjZylpLRrg
+    user_name: pi
 
   roles:
     - common

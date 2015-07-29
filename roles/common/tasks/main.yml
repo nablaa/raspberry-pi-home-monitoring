@@ -7,8 +7,8 @@
     line="gpu_mem=16"
     state=present
 
-- name: Create user pi
-  user: name=pi password={{password}}
+- name: Create user {{ user_name }}
+  user: name={{ user_name }} password={{password}}
 
 - name: Set password for root
   user: name=root password={{password}} update_password=always
@@ -19,8 +19,8 @@
   with_file:
     - public_keys/lambda
 
-- name: Set up authorized_keys for pi user
-  authorized_key: user=pi
+- name: Set up authorized_keys for {{ user_name }} user
+  authorized_key: user={{ user_name }}
                   key="{{ item }}"
   with_file:
     - public_keys/lambda
