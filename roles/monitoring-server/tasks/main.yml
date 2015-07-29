@@ -9,18 +9,18 @@
 
 - name: Clone home monitoring server repository
   git: repo=https://github.com/nablaa/home-monitoring-server.git
-       dest=/home/{{ user_name }}/monitoring
+       dest={{ repo_path }}
 
 - name: Set repository permissions
-  file: path=/home/{{ user_name }}/monitoring
+  file: path={{ repo_path }}
         owner={{ user_name }} group={{ user_name }} recurse=yes
 
 - name: Install required Python packages
-  pip: requirements=/home/{{ user_name }}/monitoring/requirements.txt
+  pip: requirements={{ repo_path }}/requirements.txt
 
 - name: Copy home monitoring server config files
   copy: src=home-monitoring-server-configs/{{ item }}
-        dest=/home/{{ user_name }}/monitoring/{{ item }}
+        dest={{ repo_path }}/{{ item }}
         owner={{ user_name }} group={{ user_name }} mode=0600
   with_items:
     - config.json
