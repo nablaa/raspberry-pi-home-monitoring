@@ -20,9 +20,9 @@
   npm: name=ds18x20-rest global=yes
 
 - name: Copy ds18x20-rest service config
-  copy: src=data/ds18x20-rest-service dest=/etc/systemd/system/ds18x20-rest.service owner=root group=root mode=0644
+  copy: src=ds18x20-rest.service dest=/etc/systemd/system/ds18x20-rest.service owner=root group=root mode=0644
 
 - name: Copy ds18x20-rest config file
-  copy: src=data/ds18x20-rest-configs/{{ machinename }}.json dest=/etc/ds18x20-rest-config.json owner=root group=root mode=0644
+  copy: src=ds18x20-rest-configs/{{ machinename }}.json dest=/etc/ds18x20-rest-config.json owner=root group=root mode=0644
   notify:
     - setup ds18x20-rest server service
