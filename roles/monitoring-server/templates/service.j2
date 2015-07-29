@@ -1,0 +1,15 @@
+[Unit]
+Description={{ item.description}}
+
+[Service]
+User={{ user_name }}
+Group={{ user_name }}
+Restart=always
+RestartSec=30
+StandardOutput=syslog
+SyslogIdentifier={{ item.name }}
+WorkingDirectory={{ repo_path }}
+ExecStart=/usr/bin/env python3 {{ item.command }}
+
+[Install]
+WantedBy=multi-user.target

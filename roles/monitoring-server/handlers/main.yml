@@ -5,4 +5,8 @@
   with_items:
     - home-monitoring-data-collection.service
     - home-monitoring-web-server.service
+
+- name: setup home monitoring server timers
+  service: name={{ item }} state=started enabled=yes
+  with_items:
     - home-monitoring-create-graphs.timer
