@@ -55,22 +55,15 @@
 
 - pacman: name={{ item }} state=installed
   with_items:
-    - vim
-    - git
-    - tmux
-    - zsh
     - base-devel
-    - wget
-    - rxvt-unicode-terminfo
-    - iotop
+    - git
     - htop
+    - iotop
     - rsync
-
-- name: Copy tmux service config
-  copy: src=data/tmux-service dest=/etc/systemd/system/tmux@pi.service owner=root group=root mode=0644
-
-- name: Enable tmux service
-  file: src=/etc/systemd/system/tmux@pi.service dest=/etc/systemd/system/multi-user.target.wants/tmux@pi.service owner=root group=root state=link
+    - rxvt-unicode-terminfo
+    - tmux
+    - vim
+    - wget
 
 - name: Set system log max size
   lineinfile:
