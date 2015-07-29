@@ -1,0 +1,78 @@
+---
+
+- name: GPU memory on Raspberry Pi
+  lineinfile:
+    dest=/boot/config.txt
+    regexp="gpu_mem="
+    line="gpu_mem=16"
+    state=present
+
+- name: Create user pi
+  user: name=pi password={{password}}
+
+- name: Set password for root
+  user: name=root password={{password}} update_password=always
+
+- name: Set up authorized_keys for root user
+  authorized_key: user=root key="{{ lookup('file', 'public_keys/lambda') }}"
+
+- name: Set up authorized_keys for pi user
+  authorized_key: user=pi
+                  key="{{ item }}"
+  with_file:
+    - public_keys/lambda
+    - public_keys/mu
+
+- name: Set hostname
+  lineinfile: dest=/etc/hostname regexp=.* line={{ machinename }}
+
+- name: Disallow SSH password authentication
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp="PasswordAuthentication"
+    line="PasswordAuthentication no"
+    state=present
+  notify:
+    - restart sshd
+
+- name: Set timezone
+  file: src=/usr/share/zoneinfo/Europe/Helsinki dest=/etc/localtime owner=root group=root state=link
+
+- name: Install NTP
+  pacman: name=ntp state=installed
+
+- name: Enable NTP daemon
+  service: name=ntpd enabled=yes state=started
+
+- name: Enable w1 kernel modules
+  copy: src=data/w1-therm.conf dest=/etc/modules-load.d/w1-therm.conf owner=root group=root mode=0644
+
+- name: Load w1 kernel modules
+  modprobe: name=w1_gpio state=present
+  modprobe: name=w1_therm state=present
+
+- pacman: name={{ item }} state=installed
+  with_items:
+    - vim
+    - git
+    - tmux
+    - zsh
+    - base-devel
+    - wget
+    - rxvt-unicode-terminfo
+    - iotop
+    - htop
+    - rsync
+
+- name: Copy tmux service config
+  copy: src=data/tmux-service dest=/etc/systemd/system/tmux@pi.service owner=root group=root mode=0644
+
+- name: Enable tmux service
+  file: src=/etc/systemd/system/tmux@pi.service dest=/etc/systemd/system/multi-user.target.wants/tmux@pi.service owner=root group=root state=link
+
+- name: Set system log max size
+  lineinfile:
+    dest=/etc/systemd/journald.conf
+    regexp="SystemMaxUse="
+    line="SystemMaxUse=50M"
+    state=present

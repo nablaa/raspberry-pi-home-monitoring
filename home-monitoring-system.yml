@@ -1,0 +1,12 @@
+---
+
+- hosts: all
+  user: root
+  sudo: no
+  vars:
+    # created with:
+    # python -c 'import crypt; print crypt.crypt("This is my Password", "salt")'
+    password: kzsNjZylpLRrg
+
+  roles:
+    - common
