@@ -46,7 +46,8 @@
 - name: Enable NTP daemon
   service: name=ntpd enabled=yes state=started
 
-- pacman: name={{ item }} state=installed
+- name: Install common packages
+  pacman: name={{ item }} state=installed
   with_items:
     - base-devel
     - git
