@@ -1,0 +1,11 @@
+- name: run install script
+  shell: ./install-telldus.sh > install-telldus.log
+  notify:
+    - Enable telldus daemon
+    - Copy telldus config file
+
+- name: Enable telldus daemon
+  service: name=telldus enabled=yes state=started
+
+- name: Copy telldus config file
+  copy: src=tellstick.conf dest=/etc/tellstick.conf owner=root group=root mode=0644
