@@ -31,7 +31,4 @@ You can check that Ansible can ping the newly created image:
 
 To install the system using Ansible, run the following commands:
 
-    ansible-playbook -i hosts initial-setup.yml --ask-pass
-    ansible-playbook -i hosts telldus.yml
-    ansible-playbook -i hosts monitoring.yml
-    ansible-playbook -i hosts home-monitoring-server.yml
+    ansible-playbook -i hosts home-monitoring-system.yml --ask-pass
