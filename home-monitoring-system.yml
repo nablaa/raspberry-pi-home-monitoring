@@ -20,3 +20,12 @@
 
   roles:
     - temperature-measurement
+
+- hosts: monitoring-server
+  user: root
+  sudo: no
+  vars:
+    user_name: pi
+
+  roles:
+    - monitoring-server
