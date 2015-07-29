@@ -18,48 +18,24 @@
 - name: Install required Python packages
   pip: requirements=/home/{{ user_name }}/monitoring/requirements.txt
 
-- name: Copy home monitoring server config file
-  copy: src=data/home-monitoring-server-configs/config.json
-        dest=/home/{{ user_name }}/monitoring/config.json
-        owner={{ user_name }} group={{ user_name }} mode=0644
-
-- name: Copy home monitoring web server password file
-  copy: src=data/home-monitoring-server-configs/password
-        dest=/home/{{ user_name }}/monitoring/password
+- name: Copy home monitoring server config files
+  copy: src=home-monitoring-server-configs/{{ item }}
+        dest=/home/{{ user_name }}/monitoring/{{ item }}
         owner={{ user_name }} group={{ user_name }} mode=0600
+  with_items:
+    - config.json
+    - password
+    - server.crt
+    - server.key
 
-- name: Copy home monitoring web server certificate
-  copy: src=data/home-monitoring-server-configs/server.crt
-        dest=/home/{{ user_name }}/monitoring/server.crt
-        owner={{ user_name }} group={{ user_name }} mode=0600
-
-- name: Copy home monitoring web server certificate key
-  copy: src=data/home-monitoring-server-configs/server.key
-        dest=/home/{{ user_name }}/monitoring/server.key
-        owner={{ user_name }} group={{ user_name }} mode=0600
-
-- name: Copy home-monitoring-data-collection service config
-  copy: src=data/home-monitoring-data-collection-service
-        dest=/etc/systemd/system/home-monitoring-data-collection.service
+- name: Copy home monitoring server service configs
+  copy: src={{ item }}
+        dest=/etc/systemd/system/{{ item }}
         owner=root group=root mode=0644
+  with_items:
+    - home-monitoring-data-collection.service
+    - home-monitoring-web-server.service
+    - home-monitoring-create-graphs.service
+    - home-monitoring-create-graphs.timer
   notify:
-    - setup home-monitoring-data-collection service
-
-- name: Copy home-monitoring-web-server service config
-  copy: src=data/home-monitoring-web-server-service
-        dest=/etc/systemd/system/home-monitoring-web-server.service
-        owner=root group=root mode=0644
-  notify:
-    - setup home-monitoring-web-server service
-
-- name: Copy home-monitoring-create-graphs service config
-  copy: src=data/home-monitoring-create-graphs-service
-        dest=/etc/systemd/system/home-monitoring-create-graphs.service
-        owner=root group=root mode=0644
-
-- name: Copy home-monitoring-create-graphs timer config
-  copy: src=data/home-monitoring-create-graphs-timer
-        dest=/etc/systemd/system/home-monitoring-create-graphs.timer
-        owner=root group=root mode=0644
-  notify:
-    - setup home-monitoring-create-graphs timer
+    - setup home monitoring server services

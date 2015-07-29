@@ -1,22 +1,8 @@
 ---
 
-- name: setup home-monitoring-data-collection service
-  file: src=/etc/systemd/system/home-monitoring-data-collection.service dest=/etc/systemd/system/multi-user.target.wants/home-monitoring-data-collection.service owner=root group=root state=link
-  notify: start home-monitoring-data-collection service
-
-- name: setup home-monitoring-web-server service
-  file: src=/etc/systemd/system/home-monitoring-web-server.service dest=/etc/systemd/system/multi-user.target.wants/home-monitoring-web-server.service owner=root group=root state=link
-  notify: start home-monitoring-web-server service
-
-- name: setup home-monitoring-create-graphs timer
-  file: src=/etc/systemd/system/home-monitoring-create-graphs.timer dest=/etc/systemd/system/timers.target.wants/home-monitoring-create-graphs.timer owner=root group=root state=link
-  notify: start home-monitoring-create-graphs timer
-
-- name: start home-monitoring-data-collection service
-  service: name=home-monitoring-data-collection state=started
-
-- name: start home-monitoring-web-server service
-  service: name=home-monitoring-web-server state=started
-
-- name: start home-monitoring-create-graphs timer
-  service: name=home-monitoring-create-graphs.timer state=started
+- name: setup home monitoring server services
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - home-monitoring-data-collection.service
+    - home-monitoring-web-server.service
+    - home-monitoring-create-graphs.timer
