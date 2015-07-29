@@ -46,13 +46,6 @@
 - name: Enable NTP daemon
   service: name=ntpd enabled=yes state=started
 
-- name: Enable w1 kernel modules
-  copy: src=data/w1-therm.conf dest=/etc/modules-load.d/w1-therm.conf owner=root group=root mode=0644
-
-- name: Load w1 kernel modules
-  modprobe: name=w1_gpio state=present
-  modprobe: name=w1_therm state=present
-
 - pacman: name={{ item }} state=installed
   with_items:
     - base-devel

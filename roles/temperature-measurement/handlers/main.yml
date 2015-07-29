@@ -1,0 +1,8 @@
+---
+
+- name: setup ds18x20-rest server service
+  file: src=/etc/systemd/system/ds18x20-rest.service dest=/etc/systemd/system/multi-user.target.wants/ds18x20-rest.service owner=root group=root state=link
+  notify: start ds18x20 service
+
+- name: start ds18x20 service
+  service: name=ds18x20-rest state=started

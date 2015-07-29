@@ -1,0 +1,28 @@
+---
+
+- name: Enable w1 kernel modules
+  copy: src=w1-therm.conf dest=/etc/modules-load.d/w1-therm.conf owner=root group=root mode=0644
+
+- name: Load w1 kernel modules
+  modprobe: name=w1_gpio state=present
+  modprobe: name=w1_therm state=present
+
+- name: Enable W1 GPIO in Raspberry Pi config
+  lineinfile: dest=/boot/config.txt state=present line="dtoverlay=w1-gpio,gpiopin=4,pullup=on"
+
+- name: Install required packages
+  pacman: name={{ item }} state=installed
+  with_items:
+    - nodejs
+    - npm
+
+- name: Install "ds18x20-rest" node.js package globally
+  npm: name=ds18x20-rest global=yes
+
+- name: Copy ds18x20-rest service config
+  copy: src=data/ds18x20-rest-service dest=/etc/systemd/system/ds18x20-rest.service owner=root group=root mode=0644
+
+- name: Copy ds18x20-rest config file
+  copy: src=data/ds18x20-rest-configs/{{ machinename }}.json dest=/etc/ds18x20-rest-config.json owner=root group=root mode=0644
+  notify:
+    - setup ds18x20-rest server service
