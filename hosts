@@ -1,5 +1,6 @@
 [temperature-measurement]
-192.168.1.15 machinename=iota
+192.168.1.13 machinename=mu
+192.168.1.14 machinename=nu
 
 [monitoring-server]
-192.168.1.15 machinename=iota
+192.168.1.14 machinename=nu
