@@ -37,6 +37,16 @@
   notify:
     - restart sshd
 
+- name: Enable Finland Pacman mirror
+  lineinfile:
+    dest=/etc/pacman.d/mirrorlist
+    regexp="fi.mirror.archlinuxarm.org"
+    line="Server = http://fi.mirror.archlinuxarm.org/$arch/$repo"
+    state=present
+
+- name: Update Pacman cache
+  pacman: update_cache=yes
+
 - name: Set timezone
   file: src=/usr/share/zoneinfo/Europe/Helsinki dest=/etc/localtime owner=root group=root state=link
 
