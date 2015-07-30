@@ -59,7 +59,30 @@
 - name: Install common packages
   pacman: name={{ item }} state=installed
   with_items:
-    - base-devel
+    - autoconf
+    - automake
+    - binutils
+    - bison
+    - fakeroot
+    - file
+    - findutils
+    - flex
+    - gawk
+    - gcc
+    - gettext
+    - grep
+    - groff
+    - gzip
+    - libtool
+    - m4
+    - make
+    - patch
+    - pkg-config
+    - sed
+    - sudo
+    - texinfo
+    - util-linux
+    - which
     - git
     - htop
     - iotop
