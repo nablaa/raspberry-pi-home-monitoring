@@ -35,13 +35,16 @@
   with_items:
     - { name: "home-monitoring-data-collection",
         description: "Start home monitoring data collection service",
-        command: "monitoring.py config.json" }
+        command: "monitoring.py config.json",
+        restart: True }
     - { name: "home-monitoring-web-server",
         description: "Start home monitoring web server service",
-        command: "server.py" }
+        command: "server.py",
+        restart: True }
     - { name: "home-monitoring-create-graphs",
         description: "Start home monitoring graph creation service",
-        command: "create_graphs.py -o static/images/temperatures config.json" }
+        command: "create_graphs.py -o static/images/temperatures config.json",
+        restart: False }
   notify:
     - setup home monitoring server services
 

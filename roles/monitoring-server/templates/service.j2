@@ -4,8 +4,10 @@ Description={{ item.description}}
 [Service]
 User={{ user_name }}
 Group={{ user_name }}
+{% if item.restart %}
 Restart=always
 RestartSec=30
+{% endif %}
 StandardOutput=syslog
 SyslogIdentifier={{ item.name }}
 WorkingDirectory={{ repo_path }}
