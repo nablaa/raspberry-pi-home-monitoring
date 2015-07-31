@@ -53,6 +53,16 @@
     line="Server = http://fi.mirror.archlinuxarm.org/$arch/$repo"
     state=present
 
+- name: Set pacman options
+  lineinfile:
+    dest=/etc/pacman.conf
+    regexp={{ item }}
+    line={{ item }}
+    state=present
+  with_items:
+    - Color
+    - VerbosePkgLists
+
 - name: Update Pacman cache
   pacman: update_cache=yes
 
