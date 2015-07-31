@@ -59,6 +59,20 @@
 - name: Set timezone
   file: src=/usr/share/zoneinfo/Europe/Helsinki dest=/etc/localtime owner=root group=root state=link
 
+- name: Add locales to locale.gen
+  lineinfile:
+    dest=/etc/locale.gen
+    regexp="{{ item }}"
+    line="{{ item }}"
+    state=present
+  with_items:
+    - en_US.UTF-8 UTF-8
+  notify:
+    - generate locales
+
+- name: Set locale configuration
+  copy: src=locale.conf dest=/etc/locale.conf owner=root group=root mode=0644
+
 - name: Install NTP
   pacman: name=ntp state=installed
 
