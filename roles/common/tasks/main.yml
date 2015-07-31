@@ -59,6 +59,14 @@
 - name: Set timezone
   file: src=/usr/share/zoneinfo/Europe/Helsinki dest=/etc/localtime owner=root group=root state=link
 
+- name: Set virtual console keymap
+  lineinfile:
+    dest=/etc/vconsole.conf
+    regexp="KEYMAP="
+    line="KEYMAP=fi"
+    state=present
+    create=yes
+
 - name: Add locales to locale.gen
   lineinfile:
     dest=/etc/locale.gen
