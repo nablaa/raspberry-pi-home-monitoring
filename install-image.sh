@@ -2,17 +2,23 @@
 
 set -e
 set -u
+set -o pipefail
 
 usage() {
-    echo "Usage: $0 DEVICE HOSTNAME"
-    echo "Example: $0 /dev/sdX mypi"
+    echo "Usage: $0 DEVICE HOSTNAME WLAN-NAME WLAN-PASSWORD"
+    echo "Example: $0 /dev/sdX mypi myap myapppassword"
     exit 1
 }
 
-[ $# -ne 2 ] && { usage; }
+[ $# -ne 4 ] && { usage; }
 
 DEVICE="$1"
 HOSTNAME="$2"
+WLAN_NAME="$3"
+WLAN_PASSWORD="$4"
+
+WLAN_KEY=$(wpa_passphrase "$WLAN_NAME" "$WLAN_PASSWORD" \
+    | grep -v "#psk=" | grep "psk=" | cut -d "=" -f 2)
 
 if [ ! -e "$DEVICE" ]; then
     echo "Device $DEVICE not found!"
@@ -70,31 +76,31 @@ tar -xf ArchLinuxARM-rpi-latest.tar.gz -C root
 sync
 
 echo "Copying netctl profiles"
-cat > root/etc/netctl/wlan0-myap << EOF
-Description='WLAN profile for myap'
+cat > root/etc/netctl/wlan0-"${WLAN_NAME}" << EOF
+Description='WLAN profile for ${WLAN_NAME}'
 Interface=wlan0
 Connection=wireless
 Security=wpa
-ESSID=myap
+ESSID=${WLAN_NAME}
 IP=dhcp
-Key=myap-password
+Key=\"${WLAN_KEY}
 ForceConnect=yes
 TimeoutDHCP=40
 EOF
 
 echo "Creating systemd service for netctl profile"
-cat > 'root/etc/systemd/system/netctl@wlan0\x2dmyap.service' << EOF
+cat > "root/etc/systemd/system/netctl@wlan0\x2d${WLAN_NAME}.service" << EOF
 .include /usr/lib/systemd/system/netctl@.service
 
 [Unit]
-Description=WLAN profile for myap
+Description=WLAN profile for ${WLAN_NAME}
 BindsTo=sys-subsystem-net-devices-wlan0.device
 After=sys-subsystem-net-devices-wlan0.device
 EOF
 
 echo "Enabling WLAN netctl profile at startup"
 pushd root/etc/systemd/system/multi-user.target.wants
-ln -s '../netctl@wlan0\x2dmyap.service' 'netctl@wlan0\x2dmyap.service'
+ln -s "../netctl@wlan0\x2d${WLAN_NAME}.service" "netctl@wlan0\x2d${WLAN_NAME}.service"
 popd
 
 echo "Disabling powersave on WLAN in udev"
