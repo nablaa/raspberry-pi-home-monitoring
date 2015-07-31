@@ -114,6 +114,12 @@ mv root/boot/* boot
 echo "Setting hostname to $HOSTNAME"
 echo "$HOSTNAME" > root/etc/hostname
 
+if [ -f "$HOME/.ssh/id_rsa.pub" ]; then
+    echo "Copying SSH public key"
+    mkdir -p root/root/.ssh
+    cat "$HOME/.ssh/id_rsa.pub" >> root/root/.ssh/authorized_keys
+fi
+
 echo "Unmounting partitions"
 sync
 umount boot root
