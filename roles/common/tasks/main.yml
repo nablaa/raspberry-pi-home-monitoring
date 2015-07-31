@@ -123,6 +123,7 @@
     - vim
     - wget
     - ufw
+    - packer
 
 - name: Set system log max size
   lineinfile:
