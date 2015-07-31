@@ -91,6 +91,7 @@
     - tmux
     - vim
     - wget
+    - ufw
 
 - name: Set system log max size
   lineinfile:
@@ -98,3 +99,9 @@
     regexp="SystemMaxUse="
     line="SystemMaxUse=50M"
     state=present
+
+- name: Allow SSH through firewall
+  ufw: rule=allow name=ssh
+
+- name: Enable firewall
+  ufw: state=enabled policy=deny direction=incoming

@@ -26,3 +26,6 @@
   copy: src=ds18x20-rest-configs/{{ machinename }}.json dest=/etc/ds18x20-rest-config.json owner=root group=root mode=0644
   notify:
     - setup ds18x20-rest server service
+
+- name: Allow connection through firewall
+  ufw: rule=allow port=8080 proto=tcp

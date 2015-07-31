@@ -56,3 +56,6 @@
     - home-monitoring-create-graphs.timer
   notify:
     - setup home monitoring server timers
+
+- name: Allow connection through firewall
+  ufw: rule=allow port=12300 proto=tcp
