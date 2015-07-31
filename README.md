@@ -32,3 +32,7 @@ You can check that Ansible can ping the newly created image:
 To install the system using Ansible, run the following commands:
 
     ansible-playbook -i hosts home-monitoring-system.yml --ask-pass
+
+Reboot all machines after installation has finished:
+
+    ansible all -i hosts -u root -m shell -a "/sbin/reboot"
