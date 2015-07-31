@@ -134,5 +134,8 @@
 - name: Allow SSH through firewall
   ufw: rule=allow name=ssh
 
-- name: Enable firewall
+- name: Start firewall
   ufw: state=enabled policy=deny direction=incoming
+
+- name: Enable firewall service
+  service: name=ufw enabled=yes state=started
