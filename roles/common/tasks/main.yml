@@ -37,6 +37,15 @@
   notify:
     - restart sshd
 
+- name: Allow only certain users to login with SSH
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp="AllowUsers"
+    line="AllowUsers root {{ user_name }}"
+    state=present
+  notify:
+    - restart sshd
+
 - name: Enable Finland Pacman mirror
   lineinfile:
     dest=/etc/pacman.d/mirrorlist
