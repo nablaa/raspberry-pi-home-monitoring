@@ -5,17 +5,18 @@ set -u
 set -o pipefail
 
 usage() {
-    echo "Usage: $0 DEVICE HOSTNAME WLAN-NAME WLAN-PASSWORD"
-    echo "Example: $0 /dev/sdX mypi myap myapppassword"
+    echo "Usage: $0 DEVICE HOSTNAME WLAN-NAME WLAN-PASSWORD RASPBERRY-PI-VERSION"
+    echo "Example: $0 /dev/sdX mypi myap myapppassword 2"
     exit 1
 }
 
-[ $# -ne 4 ] && { usage; }
+[ $# -ne 5 ] && { usage; }
 
 DEVICE="$1"
 HOSTNAME="$2"
 WLAN_NAME="$3"
 WLAN_PASSWORD="$4"
+RASPBERRY_PI_VERSION="$5"
 
 WLAN_KEY=$(wpa_passphrase "$WLAN_NAME" "$WLAN_PASSWORD" \
     | grep -v "#psk=" | grep "psk=" | cut -d "=" -f 2)
@@ -24,6 +25,12 @@ if [ ! -e "$DEVICE" ]; then
     echo "Device $DEVICE not found!"
     echo "Give a valid device (e.g. /dev/sdX)"
     exit 2
+fi
+
+if [ "$RASPBERRY_PI_VERSION" -eq 2 ]; then
+    IMAGE_TAR_FILENAME="ArchLinuxARM-rpi-2-latest.tar.gz"
+else
+    IMAGE_TAR_FILENAME="ArchLinuxARM-rpi-latest.tar.gz"
 fi
 
 echo "Flashing device $DEVICE and setting hostname to $HOSTNAME"
@@ -71,8 +78,8 @@ mkdir root
 mount "$DEVICE"2 root
 
 echo "Copying base image"
-wget http://archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz
-tar -xf ArchLinuxARM-rpi-latest.tar.gz -C root
+wget "http://archlinuxarm.org/os/${IMAGE_TAR_FILENAME}"
+tar -xf "${IMAGE_TAR_FILENAME}" -C root
 sync
 
 echo "Copying netctl profiles"
