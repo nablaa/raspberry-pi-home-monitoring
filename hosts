@@ -1,6 +1,6 @@
 [temperature-measurement]
+192.168.1.11 machinename=sigma
 192.168.1.13 machinename=mu
-192.168.1.14 machinename=nu
 
 [monitoring-server]
-192.168.1.14 machinename=nu
+192.168.1.11 machinename=sigma
