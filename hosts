@@ -1,6 +1,7 @@
 [temperature-measurement]
 192.168.1.11 machinename=sigma
 192.168.1.13 machinename=mu
+192.168.1.15 machinename=kappa
 
 [monitoring-server]
 192.168.1.11 machinename=sigma
