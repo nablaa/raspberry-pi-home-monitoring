@@ -38,6 +38,8 @@ Create (self-signed) certificate for HTTPS:
 See [home-monitoring-server](https://github.com/nablaa/home-monitoring-server)
 project for more details.
 
+Edit dy.fi dynamic DNS configuration in `roles/dyndns/files/dy-update.service`.
+
 ## Running Ansible
 
 You can check that Ansible can ping the newly created image:

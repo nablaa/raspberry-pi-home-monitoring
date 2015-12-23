@@ -1,0 +1,7 @@
+---
+
+- name: setup dyndns update service
+  service: name=dy-update.service state=started enabled=yes
+
+- name: setup dyndns update timer
+  service: name=dy-update.timer state=started enabled=yes

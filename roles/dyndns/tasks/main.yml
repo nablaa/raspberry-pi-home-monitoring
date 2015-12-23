@@ -1,0 +1,19 @@
+---
+
+- name: Copy dynamic dns update service
+  copy: src={{ item }}
+        dest=/etc/systemd/system/{{ item }}
+        owner=root group=root mode=0644
+  with_items:
+    - dy-update.service
+  notify:
+    - setup dyndns update service
+
+- name: Copy dynamic dns timer config
+  copy: src={{ item }}
+        dest=/etc/systemd/system/{{ item }}
+        owner=root group=root mode=0644
+  with_items:
+    - dy-update.timer
+  notify:
+    - setup dyndns update timer

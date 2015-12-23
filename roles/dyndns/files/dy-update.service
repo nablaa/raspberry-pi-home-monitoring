@@ -1,0 +1,11 @@
+[Unit]
+Description=Updates dynamic DNS host with dy.fi service
+
+[Service]
+StandardOutput=null
+StandardError=null
+SyslogIdentifier=dy-update
+ExecStart=/usr/bin/wget --delete-after --no-check-certificate --no-proxy --user=MYUSER --password=MYPASSWORD 'http://www.dy.fi/nic/update?hostname=MYFULLHOSTNAMEHERE'
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=Run dy.fi dynamic DNS update
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+Unit=dy-update.service
+
+[Install]
+WantedBy=timers.target

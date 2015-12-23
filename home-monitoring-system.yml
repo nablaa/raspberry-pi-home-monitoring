@@ -24,3 +24,10 @@
 
   roles:
     - monitoring-server
+
+- hosts: dyndns
+  user: root
+  sudo: no
+
+  roles:
+    - dyndns
