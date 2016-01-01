@@ -1,5 +1,7 @@
 [Unit]
 Description=Start ds18x20-rest server
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 User=nobody

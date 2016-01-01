@@ -1,5 +1,7 @@
 [Unit]
 Description=Updates dynamic DNS host with dy.fi service
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 StandardOutput=null

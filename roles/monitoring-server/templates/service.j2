@@ -1,5 +1,7 @@
 [Unit]
 Description={{ item.description}}
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 User={{ user_name }}
