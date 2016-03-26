@@ -31,7 +31,7 @@
 - name: Disallow SSH password authentication
   lineinfile:
     dest=/etc/ssh/sshd_config
-    regexp="PasswordAuthentication"
+    regexp="^PasswordAuthentication"
     line="PasswordAuthentication no"
     state=present
   notify:
